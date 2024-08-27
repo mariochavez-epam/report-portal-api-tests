@@ -1,11 +1,14 @@
 {
-  "name": "ls",
+  "name": "report-portal-test-automation-suite",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo HOLA"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "mario chavez",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^13.13.3"
+  }
 }
