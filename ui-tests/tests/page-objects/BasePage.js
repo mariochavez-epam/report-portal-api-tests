@@ -1,5 +1,3 @@
-// cypress/pages/BasePage.js
-
 class BasePage {
     constructor() {
       this.baseUrl = "http://localhost:8080/ui";

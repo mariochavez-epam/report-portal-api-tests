@@ -1,5 +1,3 @@
-// cypress/pages/LoginPage.js
-
 const BasePage = require('./BasePage'); // Import the base page
 
 class LoginPage extends BasePage {

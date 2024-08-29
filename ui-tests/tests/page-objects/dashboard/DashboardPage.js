@@ -1,5 +1,3 @@
-// cypress/pages/DashboardPage.js
-
 const BasePage = require('./BasePage'); // Import the base page
 
 class DashboardPage extends BasePage {
