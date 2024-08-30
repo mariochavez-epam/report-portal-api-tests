@@ -1,4 +1,7 @@
-class BasePage {
+// cypress/pages/BasePage.js
+
+export abstract class BasePage {
+    baseUrl: string;
     constructor() {
       this.baseUrl = "http://localhost:8080/ui";
     }
@@ -10,6 +13,8 @@ class BasePage {
   
     // Navigate to a specific URL
     navigateTo(url) {
+      console.log("navigating to");
+      console.log(this.baseUrl + url);
       cy.visit(this.baseUrl + url);
     }
   
@@ -63,6 +68,4 @@ class BasePage {
       return cy.on('window:alert', (text) => text);
     }
   }
-  
-  module.exports = new BasePage();
   

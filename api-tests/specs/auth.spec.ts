@@ -1,6 +1,7 @@
 import { AuthResponseBody } from '../models'
 import { AxiosResponse } from 'axios'
 import AuthEndpoints from '../endpoints/auth';
+import { expect } from '@jest/globals';
 
 let auth: AuthEndpoints;
 

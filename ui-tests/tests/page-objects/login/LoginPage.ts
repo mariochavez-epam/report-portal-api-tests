@@ -1,6 +1,10 @@
-const BasePage = require('./BasePage'); // Import the base page
+import { BasePage }  from "../BasePage.ts";
 
-class LoginPage extends BasePage {
+export default class LoginPage extends BasePage {
+  selectors: {
+    usernameInput: string; passwordInput: string; loginButton: string; userAvatarIcon: string; userMenuContainer: string; logoutButton: string; // Adjusted to use a different CSS selector
+    notificationContainer: string; loginSuccessfulMessage: string;
+  };
   constructor() {
     super();
     // Selectors for elements on the login page
@@ -36,17 +40,17 @@ class LoginPage extends BasePage {
 
   // Method to enter username
   enterUsername(username) {
-    cy.get(this.selectors.usernameInput).clear().type(username);
+    cy.get(this.selectors.usernameInput).should('be.enabled').clear().type(username);
   }
 
   // Method to enter password
   enterPassword(password) {
-    cy.get(this.selectors.passwordInput).clear().type(password);
+    cy.get(this.selectors.passwordInput).should('be.enabled').clear().type(password);
   }
 
   // Method to click the login button
   clickLoginButton() {
-    cy.get(this.selectors.loginButton).click();
+    cy.get(this.selectors.loginButton).should('exist').click();
   }
 
   // Method to get notification container message text
@@ -64,5 +68,3 @@ class LoginPage extends BasePage {
     return cy.get(this.selectors.loginSuccessfulMessage).should('be.visible');
   }
 }
-
-module.exports = new LoginPage();

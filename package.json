@@ -23,6 +23,7 @@
   },
   "jest": {
     "preset": "ts-jest",
+    "testPathIgnorePatterns": ["<rootDir>/ui-test/*"],
     "moduleDirectories": [
       "node_modules",
       "<rootDir>"

@@ -1,6 +1,7 @@
-const BasePage = require('./BasePage'); // Import the base page
+import { BasePage } from "../BasePage.ts";
 
-class DashboardPage extends BasePage {
+export default class DashboardPage extends BasePage {
+  selectors: { mainPageWrapper: string; reportList: string; reportItems: string; addReportButton: string; logoutButton: string; };
   constructor() {
     super();
     // Selectors for elements on the dashboard page
@@ -39,5 +40,3 @@ class DashboardPage extends BasePage {
     cy.get(reportSelector).click();
   }
 }
-
-module.exports = new DashboardPage();
