@@ -16,7 +16,7 @@ jobs:
   
       steps:
       - name: Make envfile
-        uses: SpicyPizza/create-envfile@v1
+        uses: SpicyPizza/create-envfile@v1.2
         with:
           envkey_TEST_ENVIRONMENT: "prod"
           envkey_API_USER: "mchavezTest"
