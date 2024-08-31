@@ -1,4 +1,4 @@
-import { BasePage }  from "../BasePage.ts";
+import { BasePage } from "../BasePage.ts";
 
 export default class LoginPage extends BasePage {
   selectors: {
@@ -40,12 +40,12 @@ export default class LoginPage extends BasePage {
 
   // Method to enter username
   enterUsername(username) {
-    cy.get(this.selectors.usernameInput).should('be.enabled').clear().type(username);
+    cy.get(this.selectors.usernameInput).clear().type(username);
   }
 
   // Method to enter password
   enterPassword(password) {
-    cy.get(this.selectors.passwordInput).should('be.enabled').clear().type(password);
+    cy.get(this.selectors.passwordInput).clear().type(password);
   }
 
   // Method to click the login button

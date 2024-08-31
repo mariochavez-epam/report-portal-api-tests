@@ -10,6 +10,21 @@ on:
     branches: [ "main" ]
 
 jobs:
+  create-envfile:
+  
+      runs-on: ubuntu-latest
+  
+      steps:
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_TEST_ENVIRONMENT: "prod"
+          envkey_API_USER: "mchavezTest"
+          envkey_API_PASSWORD: "sa7asa7a"
+          envkey_UI_USER: "mchavezTest"
+          envkey_UI_PASSWORD: "sa7asa7a"
+          file_name: .env
+  
   build:
 
     runs-on: ubuntu-latest
@@ -29,3 +44,4 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+    - run: npm run cypress:run

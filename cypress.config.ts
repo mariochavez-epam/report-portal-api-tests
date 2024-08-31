@@ -1,4 +1,5 @@
 const { defineConfig } = require('cypress');
+const config = require("./ui-tests/tests/config/config");
 
 module.exports = defineConfig({
   e2e: {
@@ -21,7 +22,7 @@ module.exports = defineConfig({
     screenshotOnRunFailure: true,
     // Set to true to take screenshots on failure automatically
     setupNodeEvents(on, config) {
-      // Event listeners to handle various Cypress events
+       // Get environment variable from Cypress config
     },
   },
 
