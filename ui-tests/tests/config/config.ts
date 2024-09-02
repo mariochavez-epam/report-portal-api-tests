@@ -1,6 +1,6 @@
 module.exports = {
     "local": {
-        "BASE_URL": "localhost:8080",
+        "BASE_URL": "http://localhost:8080",
         "API_USER": process.env.API_USER,
         "API_PASSWORD": process.env.API_PASSWORD,
         "UI_USER": process.env.UI_USER,

@@ -2,15 +2,16 @@ import { Utils } from "../../../utils/Utils.ts";
 import DashboardPage from "../page-objects/dashboard/DashboardPage.ts";
 import LoginPage from "../page-objects/login/LoginPage.ts";
 
-const testData = require("../config/config");
+const testData = require("../../../api-tests/config/config.ts");
+const testEnvironment = Cypress.env("TEST_ENVIRONMENT") || "prod";
 const loginPage = new LoginPage();
 const dashboardPage = new DashboardPage();
-const testEnvironment = process.env.TEST_ENVIRONMENT || "prod";
-
 describe('Login Page UI Tests', () => {
 
     beforeEach(() => {
         loginPage.navigateToLoginPage();
+        cy.wait(1000);
+
         // Navigate to the login page
     });
 
@@ -27,8 +28,15 @@ describe('Login Page UI Tests', () => {
     });
 
     it('should successfully log in with valid credentials', () => {
-        let username = testData[testEnvironment].UI_USER || 'default';
-        let password = testData[testEnvironment].UI_PASSWORD || '1q2w3e';
+
+        console.log("testData");
+        console.log(testData);
+        console.log("environment");
+        console.log(testEnvironment);
+        console.log("testData[testEnvironment].UI_USER");
+        console.log(Cypress.env("UI_USER"));
+        let username = Cypress.env("UI_USER") || "default";
+        let password = Cypress.env("UI_PASSWORD") || "1q2w3e";
         loginPage.login(username, password);
         loginPage.isSuccessfulLoginMessageDisplayed();
         dashboardPage.isDashboardPageLoaded();

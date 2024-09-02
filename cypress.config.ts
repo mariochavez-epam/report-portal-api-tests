@@ -1,5 +1,6 @@
 const { defineConfig } = require('cypress');
-const config = require("./ui-tests/tests/config/config");
+import { config } from "dotenv";
+config();
 
 module.exports = defineConfig({
   e2e: {
@@ -13,6 +14,11 @@ module.exports = defineConfig({
     },
     chromeWebSecurity: false,
     env: {
+      BASE_URL: process.env.BASE_URL,
+      API_USER: process.env.API_USER,
+      API_PASSWORD: process.env.API_PASSWORD,
+      UI_USER: process.env.UI_USER,
+      UI_PASSWORD: process.env.UI_PASSWORD,
       // Custom environment variables can be set here
     },
     viewportWidth: 1280,
@@ -23,6 +29,7 @@ module.exports = defineConfig({
     // Set to true to take screenshots on failure automatically
     setupNodeEvents(on, config) {
        // Get environment variable from Cypress config
+
     },
   },
 

@@ -8,25 +8,10 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
 jobs:
-  create-envfile:
-  
-      runs-on: ubuntu-latest
-  
-      steps:
-      - name: Make envfile
-        uses: SpicyPizza/create-envfile@v1.2
-        with:
-          envkey_TEST_ENVIRONMENT: "prod"
-          envkey_API_USER: "mchavezTest"
-          envkey_API_PASSWORD: "sa7asa7a"
-          envkey_UI_USER: "mchavezTest"
-          envkey_UI_PASSWORD: "sa7asa7a"
-          file_name: .env
-  
-  build:
-
+ 
+  build:    
+    name: Build and Test automation Framework
     runs-on: ubuntu-latest
 
     strategy:
@@ -41,6 +26,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+      env: # Or as an environment variable
+        TEST_ENVIRONMENT: "prod"
+        API_USER: ${{ secrets.API_USER }}
+        API_PASSWORD: ${{ secrets.API_PASSWORD }}
+        UI_USER: ${{ secrets.UI_USER }}
+        UI_PASSWORD: ${{ secrets.UI_PASSWORD }}
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test

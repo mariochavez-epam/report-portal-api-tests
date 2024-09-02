@@ -1,10 +1,12 @@
 const testData = require("../../tests/config/config");
-const testEnvironment = process.env.TEST_ENVIRONMENT || "local";
+const testEnvironment = process.env.TEST_ENVIRONMENT || "prod";
 
 export abstract class BasePage {
   baseUrl: string;
   constructor() {
-    this.baseUrl = testData[testEnvironment].BASE_URL || "https://rp.epam.com";
+    console.log("testData[testEnvironment].BASE_URL");
+    console.log(testData[testEnvironment].BASE_URL);
+    this.baseUrl = testData[testEnvironment].BASE_URL;
   }
 
   // Get the base URL
