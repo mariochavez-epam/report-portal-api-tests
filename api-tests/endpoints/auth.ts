@@ -4,7 +4,7 @@ import { AuthRequestBody } from "../models";
 
 export default class AuthEndpoints extends AEndpoint {
   constructor() {
-    super("/sso/oauth/token");
+    super("/uat/sso/oauth/token");
   }
 
   public async login(data: AuthRequestBody): Promise<AxiosResponse> {

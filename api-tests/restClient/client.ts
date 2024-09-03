@@ -20,6 +20,16 @@ import axios, {
   export class RestClient {
   
     private axiosInstance: AxiosInstance;
+
+    private _authToken: string;
+    
+    public get authToken(): string {
+      return this._authToken;
+    }
+
+    public set authToken(value: string) {
+      this._authToken = value;
+    }
   
     constructor(baseUrl: string) {
       this.axiosInstance = axios.create({ baseURL: baseUrl });

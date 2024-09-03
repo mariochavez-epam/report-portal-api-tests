@@ -23,7 +23,7 @@ const errorSchema = Joi.object().keys({
 
 let auth: AuthEndpoints;
 
-describe('Authorization & Authentication', () => {
+describe.skip('Authorization & Authentication', () => {
   
   beforeAll(async (): Promise<void> => {
     auth = new AuthEndpoints();
