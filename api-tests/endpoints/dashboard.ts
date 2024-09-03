@@ -1,10 +1,11 @@
-import { AxiosRequestConfig, AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { AEndpoint } from "./abstract/AEndpoint";
-import { AuthRequestBody } from "../models";
+const testData = require("../config/config");
 
 export default class DashboardEndpoints extends AEndpoint {
   constructor() {
-    super("/api/v1/default_personal/dashboard");
+    let testEnvironment = process.env.TEST_ENVIRONMENT || "local";
+    super(`/api/v1/${testData[testEnvironment].PROJECT_NAME}/dashboard`);
     //?page.page=1&page.size=300&page.page=1&page.size=300&page.sort=
   }
 
