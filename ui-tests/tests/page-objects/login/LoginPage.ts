@@ -1,4 +1,4 @@
-import { BasePage } from "../BasePage.ts";
+import { BasePage } from "../BasePage";
 
 export default class LoginPage extends BasePage {
   selectors: {

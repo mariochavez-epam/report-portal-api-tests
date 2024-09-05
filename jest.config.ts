@@ -9,6 +9,7 @@ const config: Config.InitialOptions = {
       "node_modules",
       "<rootDir>"
     ],
+    setupFilesAfterEnv: ['<rootDir>/api-tests/config/setup.ts'],
     reporters: [
       "default", [
         "jest-html-reporter", {

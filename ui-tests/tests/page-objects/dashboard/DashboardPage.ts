@@ -1,4 +1,4 @@
-import { BasePage } from "../BasePage.ts";
+import { BasePage } from "../BasePage";
 
 export default class DashboardPage extends BasePage {
   selectors: { mainPageWrapper: string; reportList: string; reportItems: string; addReportButton: string; logoutButton: string; };

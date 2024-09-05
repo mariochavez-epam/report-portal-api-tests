@@ -22,7 +22,7 @@ import axios, {
     private axiosInstance: AxiosInstance;
 
     private _authToken: string;
-    
+
     public get authToken(): string {
       return this._authToken;
     }
@@ -33,6 +33,7 @@ import axios, {
   
     constructor(baseUrl: string) {
       this.axiosInstance = axios.create({ baseURL: baseUrl });
+      this.authToken = '';
     }
   
     private httpsAgent = new https.Agent({

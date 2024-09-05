@@ -13,6 +13,6 @@ module.exports = {
         "API_PASSWORD": process.env.API_PASSWORD,
         "UI_USER": process.env.UI_USER,
         "UI_PASSWORD": process.env.UI_PASSWORD,
-        "PROJECT_NAME": "mario_chavez_personal"
+        "PROJECT_NAME": "mchaveztest_personal"
     }
 }
