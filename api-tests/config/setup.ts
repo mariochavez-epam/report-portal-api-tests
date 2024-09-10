@@ -11,5 +11,6 @@ beforeAll(async () => {
         grant_type: "password"
     });
     process.env.bearerToken = response.data.access_token;
+    process.env.testEnvironment = process.env.TEST_ENVIRONMENT || "local";
 
 })

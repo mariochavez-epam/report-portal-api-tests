@@ -9,6 +9,7 @@ const config: Config.InitialOptions = {
       "node_modules",
       "<rootDir>"
     ],
+    maxWorkers: 4,
     setupFilesAfterEnv: ['<rootDir>/api-tests/config/setup.ts'],
     reporters: [
       "default", [

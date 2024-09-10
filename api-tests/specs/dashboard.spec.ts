@@ -1,9 +1,8 @@
-import { AuthResponseBody, DashboardResponseBody, WidgetsResponseBody } from '../models'
+import { DashboardResponseBody, WidgetsResponseBody } from '../models'
 import { AxiosResponse } from 'axios'
 import { expect } from '@jest/globals';
 import { Utils } from '../../utils/Utils';
 import DashboardEndpoints from '../endpoints/dashboard';
-import AuthEndpoints from '../endpoints/auth';
 
 import Joi from "joi";
 import { PostNewDashboardResponseBody } from '../models/dashboard/postNewDashboardResponse';
@@ -32,12 +31,12 @@ const postNewDashboardSchema = Joi.object().keys({
 
 let dashboard: DashboardEndpoints;
 
-describe('Dashboard', () => {
+describe('Dashboard Tests', () => {
   beforeAll(async (): Promise<void> => {
     dashboard = new DashboardEndpoints();
   });
 
-  test('Create a new Dashboard using POST Statement', async () => {
+  test('[T-0001] User is able to create a dashboard within POST request', async () => {
     const randomId = Utils.generateRandomUsername(10);
     let data = {name: `New Dashboard ID: ${randomId}`, description: `New Dashboard with Random ID: ${randomId} Description`}
     const response: AxiosResponse<PostNewDashboardResponseBody> = await dashboard.createDashboard(data,process.env.bearerToken);
@@ -46,7 +45,22 @@ describe('Dashboard', () => {
     await Joi.validate(response.data, postNewDashboardSchema);
   })
 
-  test('Delete Dashboard', async () => {
+  test('[T-0002] User is able to get a created dashboard within GET request', async () => {
+    const response: AxiosResponse<DashboardResponseBody> = await dashboard.getDashboards(process.env.bearerToken);
+    expect(response.status).toEqual(200)
+    expect(response.data).not.toBeUndefined();
+    await Joi.validate(response.data.content[0], dashboardSchema)
+  })
+
+  test('[T-0007] Get dashboard by Id', async () => {
+    let dashboardId: string = process.env.testEnvironment === 'local' ? '18' : '183588';
+    const response: AxiosResponse<DashboardResponseBody> = await dashboard.getDashboardById(dashboardId, process.env.bearerToken);
+    expect(response.status).toEqual(200)
+    expect(response.data).not.toBeUndefined();
+    await Joi.validate(response.data.content, dashboardSchema)
+  })
+
+  test('[T-0006] User is able to remove a dashboard within DELETE request', async () => {
     const randomId = Utils.generateRandomUsername(10);
     let data = {name: `New Dashboard ID: ${randomId}`, description: `New Dashboard with Random ID: ${randomId} Description`}
     const response: AxiosResponse<PostNewDashboardResponseBody> = await dashboard.createDashboard(data,process.env.bearerToken);
@@ -54,21 +68,6 @@ describe('Dashboard', () => {
     expect(response.data).not.toBeUndefined();
     const deleteResponse: AxiosResponse<DeleteDashboardResponse> = await dashboard.deleteDashboard(response.data.id.toString(), process.env.bearerToken);
     expect(deleteResponse.data.message).toEqual(`Dashboard with ID = '${response.data.id}' successfully deleted.` )
-  })
-
-  test('Get dashboard Items', async () => {
-    const response: AxiosResponse<DashboardResponseBody> = await dashboard.getDashboards(process.env.bearerToken);
-    expect(response.status).toEqual(200)
-    expect(response.data).not.toBeUndefined();
-    await Joi.validate(response.data.content[0], dashboardSchema)
-  })
-
-  test('Get dashboard by Id', async () => {
-    const response: AxiosResponse<DashboardResponseBody> = await dashboard.getDashboardById('183588',process.env.bearerToken);
-    expect(response.status).toEqual(200)
-    expect(response.data).not.toBeUndefined();
-    console.log(response.data);
-    await Joi.validate(response.data.content, dashboardSchema)
   })
   
 })
