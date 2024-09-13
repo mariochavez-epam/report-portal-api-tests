@@ -28,13 +28,6 @@ describe.skip('Login Page UI Tests', () => {
     });
 
     it('should successfully log in with valid credentials', () => {
-
-        console.log("testData");
-        console.log(testData);
-        console.log("environment");
-        console.log(testEnvironment);
-        console.log("testData[testEnvironment].UI_USER");
-        console.log(Cypress.env("UI_USER"));
         let username = Cypress.env("UI_USER") || "default";
         let password = Cypress.env("UI_PASSWORD") || "1q2w3e";
         loginPage.login(username, password);

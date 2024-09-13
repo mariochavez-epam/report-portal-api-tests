@@ -1,7 +1,6 @@
 import { AxiosResponse } from "axios";
 import AuthEndpoints from "../endpoints/auth";
 import { AuthResponseBody } from "../models";
-
 beforeAll(async () => {
     console.log('before all');
     const auth = new AuthEndpoints();
@@ -12,5 +11,4 @@ beforeAll(async () => {
     });
     process.env.bearerToken = response.data.access_token;
     process.env.testEnvironment = process.env.TEST_ENVIRONMENT || "local";
-
 })

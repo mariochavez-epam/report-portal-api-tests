@@ -9,6 +9,7 @@ import { PostNewDashboardResponseBody } from '../models/dashboard/postNewDashboa
 import { DeleteDashboardResponse } from '../models/dashboard/deteleDashboardResponse';
 import { CreateWidgetResponseBody } from '../models/widgets/createWidgetResponse';
 import WidgetsEndpoints from '../endpoints/widgets';
+const testData = require("../config/config");
 
 const widgetsSchema = Joi.object().keys({
     widgetId: Joi.number().error(() => 'Widget ID should be a number.'),
@@ -60,21 +61,12 @@ describe('Dashboard Tests', () => {
     test.only('[T-0004] User is able to add a widget to a dashboard within PUT request', async () => {
         const randomFilterId = Utils.generateRandomUsername(10);
         const response: AxiosResponse<DashboardResponseBody> = await dashboard.getDashboards(process.env.bearerToken);
-        const dataForWidget = {
-            widgetType: "overallStatistics",
-            contentParameters: {
-                "contentFields": ["statistics$executions$total", "statistics$executions$passed", "statistics$executions$failed", "statistics$executions$skipped", "statistics$defects$product_bug$pb001", "statistics$defects$automation_bug$ab001", "statistics$defects$system_issue$si001", "statistics$defects$no_defect$nd001", "statistics$defects$to_investigate$ti001"],
-                "itemsCount": "50",
-                "widgetOptions": { "viewMode": "panel", "latest": false }
-            },
-            filters: [{ "value": "2", "name": "DEMO_FILTER" }],
-            name: "DEMO_FILTER_" + randomFilterId,
-            description: "",
-            filterIds: ["2"]
-        };
+        const dataForWidget = testData[process.env.testEnvironment].widgetData;
         const responseCreateWidget: AxiosResponse = await widget.createWidget(dataForWidget, process.env.bearerToken);
         expect(responseCreateWidget.status).toEqual(201)
         let dashboardId = response.data.content[0].id;
+        console.log("DASBHOARD OID");
+        console.log(dashboardId);
         let widgetData = {
             addWidget: {
                 widgetId: responseCreateWidget.data.id,
