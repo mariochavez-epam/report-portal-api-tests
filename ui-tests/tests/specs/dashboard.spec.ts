@@ -21,6 +21,11 @@ describe('Login Page UI Tests', () => {
         dashboardPage.isDashboardPageLoaded();
     });
 
+    it.only('[UI-T0001] User is able to create a dashboard via UI', () => {
+        dashboardPage.clickAddNewDashboardButton();
+        dashboardPage.addNewModalLoadsProperly();
+    });
+
     it('[UI-T0008] User is able to search a Dashboard by Name', () => {
         dashboardPage.searchDashboardByName('DEMO Dashboard');
         dashboardPage.verifyChildElementContainsText('[class*=gridRow__grid-row] a','DEMO Dashboard');

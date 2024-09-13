@@ -1,7 +1,7 @@
 import { BasePage } from "../BasePage";
 
 export default class DashboardPage extends BasePage {
-  selectors: { mainPageWrapper: string; reportList: string; reportItems: string; addReportButton: string; logoutButton: string; searchByNameInput: string; };
+  selectors;
   constructor() {
     super();
     // Selectors for elements on the dashboard page
@@ -11,7 +11,8 @@ export default class DashboardPage extends BasePage {
       reportItems: '.report-item',
       addReportButton: '#addReportButton',
       logoutButton: '#logoutButton',
-      searchByNameInput: '[placeholder="Search by name"]'
+      searchByNameInput: '[placeholder="Search by name"]',
+      addDashboardButton: '[class*="addDashboardButton__add"] button'
     };
   }
 
@@ -20,9 +21,16 @@ export default class DashboardPage extends BasePage {
     cy.get(this.selectors.mainPageWrapper).should('be.visible');
   }
 
+  addNewModalLoadsProperly() {
+    cy.get(this.selectors.mainPageWrapper).should('be.visible');
+  }
+
   // Method to click on the add report button
   clickAddReportButton() {
     cy.get(this.selectors.addReportButton).click();
+  }
+  clickAddNewDashboardButton() {
+    cy.get(this.selectors.addDashboardButton).click();
   }
 
   // Method to get the list of reports displayed
