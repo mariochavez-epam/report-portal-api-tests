@@ -27,7 +27,7 @@ describe.skip('Login Page UI Tests', () => {
             .should('contain', 'An error occurred while connecting to server: You do not have enough permissions. Bad credentials');
     });
 
-    it('should successfully log in with valid credentials', () => {
+    it.skip('should successfully log in with valid credentials', () => {
         let username = Cypress.env("UI_USER") || "default";
         let password = Cypress.env("UI_PASSWORD") || "1q2w3e";
         loginPage.login(username, password);

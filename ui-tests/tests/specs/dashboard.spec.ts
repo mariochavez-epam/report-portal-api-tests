@@ -17,13 +17,12 @@ describe('Login Page UI Tests', () => {
         loginPage.login(username, password);
     });
 
-    it.skip('should display Dashboard page correctly', () => {
+    it('should display Dashboard page correctly', () => {
         dashboardPage.isDashboardPageLoaded();
     });
 
     it('should search Dashboard by name', () => {
-        dashboardPage.isDashboardPageLoaded();
-        dashboardPage.searchDashboardByName('DEMO DASHBOARD');
-        cy.contains("div", "DEMO DASHBOARD");
+        dashboardPage.searchDashboardByName('DEMO Dashboard');
+        dashboardPage.verifyChildElementContainsText('[class*=gridRow__grid-row] a','DEMO Dashboard');
     });
 });

@@ -70,4 +70,8 @@ export abstract class BasePage {
   getAlertText() {
     return cy.on('window:alert', (text) => text);
   }
+
+  verifyChildElementContainsText(parentSelector, textToFind){
+    cy.get(parentSelector).contains(textToFind);
+  }
 }

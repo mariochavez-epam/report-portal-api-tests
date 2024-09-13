@@ -42,7 +42,7 @@ export default class DashboardPage extends BasePage {
   }
 
   searchDashboardByName(name){
-    cy.get(this.selectors.searchByNameInput).clear().type(name).wait(3000)
+    cy.get(this.selectors.searchByNameInput).clear().type(name).wait(1000)
     .type('{enter}');;
   }
 }
