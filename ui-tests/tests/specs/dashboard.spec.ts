@@ -3,12 +3,12 @@ import AddNewDashboardModal from "../page-objects/dashboard/AddNewDashboardModal
 import DashboardPage from "../page-objects/dashboard/DashboardPage";
 import LoginPage from "../page-objects/login/LoginPage";
 
-const testData = require("../../../api-tests/config/config.ts");
-const testEnvironment = Cypress.env("TEST_ENVIRONMENT") || "prod";
+// const testData = require("../../../api-tests/config/config.ts");
+// const testEnvironment = Cypress.env("TEST_ENVIRONMENT") || "prod";
 const loginPage = new LoginPage();
 const dashboardPage = new DashboardPage();
 const addNewDashboardModal = new AddNewDashboardModal();
-describe('Login Page UI Tests', () => {
+describe('Dashboard Page UI Tests', () => {
 
     beforeEach(() => {
         loginPage.navigateToLoginPage();
@@ -23,7 +23,7 @@ describe('Login Page UI Tests', () => {
         dashboardPage.isDashboardPageLoaded();
     });
 
-    it.only('[UI-T0001] User is able to create a dashboard via UI', () => {
+    it('[UI-T0001] User is able to create a dashboard via UI', () => {
         const randomFilterId = Utils.generateRandomUsername(10);
         dashboardPage.clickAddNewDashboardButton();
         addNewDashboardModal.addNewModalLoadsProperly();

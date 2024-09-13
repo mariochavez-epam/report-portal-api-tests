@@ -11,8 +11,6 @@ describe('Login Page UI Tests', () => {
     beforeEach(() => {
         loginPage.navigateToLoginPage();
         cy.wait(1000);
-
-        // Navigate to the login page
     });
 
 
