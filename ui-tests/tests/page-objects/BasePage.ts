@@ -1,5 +1,5 @@
 const testData = require("../../tests/config/config");
-const testEnvironment = process.env.TEST_ENVIRONMENT || "prod";
+const testEnvironment = process.env.TEST_ENVIRONMENT || "local";
 
 export abstract class BasePage {
   baseUrl: string;

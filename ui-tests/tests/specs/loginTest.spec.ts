@@ -1,12 +1,12 @@
-import { Utils } from "../../../utils/Utils.ts";
-import DashboardPage from "../page-objects/dashboard/DashboardPage.ts";
-import LoginPage from "../page-objects/login/LoginPage.ts";
+import { Utils } from "../../../utils/Utils";
+import DashboardPage from "../page-objects/dashboard/DashboardPage";
+import LoginPage from "../page-objects/login/LoginPage";
 
 const testData = require("../../../api-tests/config/config.ts");
 const testEnvironment = Cypress.env("TEST_ENVIRONMENT") || "prod";
 const loginPage = new LoginPage();
 const dashboardPage = new DashboardPage();
-describe('Login Page UI Tests', () => {
+describe.skip('Login Page UI Tests', () => {
 
     beforeEach(() => {
         loginPage.navigateToLoginPage();

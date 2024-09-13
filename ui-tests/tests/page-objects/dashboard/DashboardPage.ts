@@ -1,7 +1,7 @@
 import { BasePage } from "../BasePage";
 
 export default class DashboardPage extends BasePage {
-  selectors: { mainPageWrapper: string; reportList: string; reportItems: string; addReportButton: string; logoutButton: string; };
+  selectors: { mainPageWrapper: string; reportList: string; reportItems: string; addReportButton: string; logoutButton: string; searchByNameInput: string; };
   constructor() {
     super();
     // Selectors for elements on the dashboard page
@@ -10,7 +10,8 @@ export default class DashboardPage extends BasePage {
       reportList: '#reportList',
       reportItems: '.report-item',
       addReportButton: '#addReportButton',
-      logoutButton: '#logoutButton'
+      logoutButton: '#logoutButton',
+      searchByNameInput: '[placeholder="Search by name"]'
     };
   }
 
@@ -38,5 +39,10 @@ export default class DashboardPage extends BasePage {
   navigateToReport(reportId) {
     const reportSelector = `#report-${reportId}`; // Example selector for specific report
     cy.get(reportSelector).click();
+  }
+
+  searchDashboardByName(name){
+    cy.get(this.selectors.searchByNameInput).clear().type(name).wait(3000)
+    .type('{enter}');;
   }
 }

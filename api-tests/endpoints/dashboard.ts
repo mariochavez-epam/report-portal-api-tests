@@ -29,4 +29,11 @@ export default class DashboardEndpoints extends AEndpoint {
   public async getDashboardById(id: string, authToken: string): Promise<AxiosResponse> {
     return this.restClient.sendGet({ route: `${this.url}/${id}`, authToken: authToken });
   }
+
+  public async addWidgetToDashboard(id: string, data: any, authToken: string): Promise<AxiosResponse> {
+    const payload: AxiosRequestConfig = {
+      data
+    }
+    return this.restClient.sendPut({ route: `${this.url}/${id}/add`, additionalConfigs: payload, authToken: authToken });
+  }
 }
