@@ -19,6 +19,7 @@ module.exports = defineConfig({
       API_PASSWORD: process.env.API_PASSWORD,
       UI_USER: process.env.UI_USER,
       UI_PASSWORD: process.env.UI_PASSWORD,
+      TEST_ENVIRONMENT: process.env.TEST_ENVIRONMENT,
       // Custom environment variables can be set here
     },
     viewportWidth: 1280,

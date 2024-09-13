@@ -65,8 +65,6 @@ describe('Dashboard Tests', () => {
         const responseCreateWidget: AxiosResponse = await widget.createWidget(dataForWidget, process.env.bearerToken);
         expect(responseCreateWidget.status).toEqual(201)
         let dashboardId = response.data.content[0].id;
-        console.log("DASBHOARD OID");
-        console.log(dashboardId);
         let widgetData = {
             addWidget: {
                 widgetId: responseCreateWidget.data.id,
@@ -83,7 +81,6 @@ describe('Dashboard Tests', () => {
         const responseAddWidget = await dashboard.addWidgetToDashboard(dashboardId, widgetData, process.env.bearerToken);
         console.log(responseAddWidget.data);
         expect(responseAddWidget.status).toEqual(200);
-
     })
 
     test('[T-0006] User is able to remove a dashboard within DELETE request', async () => {
