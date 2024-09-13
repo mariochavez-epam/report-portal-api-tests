@@ -17,11 +17,11 @@ describe('Login Page UI Tests', () => {
         loginPage.login(username, password);
     });
 
-    it('should display Dashboard page correctly', () => {
+    it('[UI-T0007] Dashboard Page loads properly', () => {
         dashboardPage.isDashboardPageLoaded();
     });
 
-    it('should search Dashboard by name', () => {
+    it('[UI-T0008] User is able to search a Dashboard by Name', () => {
         dashboardPage.searchDashboardByName('DEMO Dashboard');
         dashboardPage.verifyChildElementContainsText('[class*=gridRow__grid-row] a','DEMO Dashboard');
     });

@@ -6,7 +6,7 @@ const testData = require("../../../api-tests/config/config.ts");
 const testEnvironment = Cypress.env("TEST_ENVIRONMENT") || "prod";
 const loginPage = new LoginPage();
 const dashboardPage = new DashboardPage();
-describe.skip('Login Page UI Tests', () => {
+describe('Login Page UI Tests', () => {
 
     beforeEach(() => {
         loginPage.navigateToLoginPage();
