@@ -12,7 +12,8 @@ export default class DashboardPage extends BasePage {
       addReportButton: '#addReportButton',
       logoutButton: '#logoutButton',
       searchByNameInput: '[placeholder="Search by name"]',
-      addDashboardButton: '[class*="addDashboardButton__add"] button'
+      addDashboardButton: '[class*="addDashboardButton__add"] button',
+      notificationDashboardAdded: ".notification-transition-enter-done"
     };
   }
 
@@ -21,8 +22,13 @@ export default class DashboardPage extends BasePage {
     cy.get(this.selectors.mainPageWrapper).should('be.visible');
   }
 
+  isDasbhoardAddedProperly() {
+    cy.get(this.selectors.notificationDashboardAdded).contains('Dashboard has been added').should('be.visible');
+  }
+
+
   addNewModalLoadsProperly() {
-    cy.get(this.selectors.mainPageWrapper).should('be.visible');
+    cy.get('[class*="modalContent__modal-content"]').should('be.visible');
   }
 
   // Method to click on the add report button
@@ -33,21 +39,6 @@ export default class DashboardPage extends BasePage {
     cy.get(this.selectors.addDashboardButton).click();
   }
 
-  // Method to get the list of reports displayed
-  getReports() {
-    return cy.get(this.selectors.reportItems);
-  }
-
-  // Method to logout from the application
-  logout() {
-    cy.get(this.selectors.logoutButton).click();
-  }
-
-  // Method to navigate to a specific report
-  navigateToReport(reportId) {
-    const reportSelector = `#report-${reportId}`; // Example selector for specific report
-    cy.get(reportSelector).click();
-  }
 
   searchDashboardByName(name){
     cy.get(this.selectors.searchByNameInput).clear().type(name).wait(1000)

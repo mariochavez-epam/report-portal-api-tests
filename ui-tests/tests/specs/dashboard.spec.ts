@@ -1,4 +1,5 @@
 import { Utils } from "../../../utils/Utils";
+import AddNewDashboardModal from "../page-objects/dashboard/AddNewDashboardModal";
 import DashboardPage from "../page-objects/dashboard/DashboardPage";
 import LoginPage from "../page-objects/login/LoginPage";
 
@@ -6,6 +7,7 @@ const testData = require("../../../api-tests/config/config.ts");
 const testEnvironment = Cypress.env("TEST_ENVIRONMENT") || "prod";
 const loginPage = new LoginPage();
 const dashboardPage = new DashboardPage();
+const addNewDashboardModal = new AddNewDashboardModal();
 describe('Login Page UI Tests', () => {
 
     beforeEach(() => {
@@ -22,8 +24,13 @@ describe('Login Page UI Tests', () => {
     });
 
     it.only('[UI-T0001] User is able to create a dashboard via UI', () => {
+        const randomFilterId = Utils.generateRandomUsername(10);
         dashboardPage.clickAddNewDashboardButton();
-        dashboardPage.addNewModalLoadsProperly();
+        addNewDashboardModal.addNewModalLoadsProperly();
+        addNewDashboardModal.typeDashboardName(`Some Random name ${randomFilterId}`);
+        addNewDashboardModal.typeDashboardDescription(`Some Random description for Dashboard with random name ${randomFilterId}`);
+        addNewDashboardModal.clickAddNewDashboard();
+        dashboardPage.isDasbhoardAddedProperly();
     });
 
     it('[UI-T0008] User is able to search a Dashboard by Name', () => {
