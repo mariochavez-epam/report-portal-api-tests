@@ -1,6 +1,7 @@
 import { Utils } from "../../../utils/Utils";
 import AddNewDashboardModal from "../page-objects/dashboard/AddNewDashboardModal";
 import DashboardPage from "../page-objects/dashboard/DashboardPage";
+import DeleteDashboardModal from "../page-objects/dashboard/DeleteDashboardModal";
 import LoginPage from "../page-objects/login/LoginPage";
 
 // const testData = require("../../../api-tests/config/config.ts");
@@ -8,6 +9,7 @@ import LoginPage from "../page-objects/login/LoginPage";
 const loginPage = new LoginPage();
 const dashboardPage = new DashboardPage();
 const addNewDashboardModal = new AddNewDashboardModal();
+const deleteDashboardModal = new DeleteDashboardModal();
 describe('Dashboard Page UI Tests', () => {
 
     beforeEach(() => {
@@ -34,6 +36,15 @@ describe('Dashboard Page UI Tests', () => {
         dashboardPage.clickDashboardItemOnSideBar();
         dashboardPage.searchDashboardByName(`Some Random name ${randomFilterId}`);
         dashboardPage.verifyChildElementContainsText('[class*=gridRow__grid-row] a',`Some Random name ${randomFilterId}`);
+    });
+
+    it.only('[UI-T0002] User is able to delete a dashboard via UI', () => {
+        dashboardPage.searchDashboardByName(`Some Random name`);
+        dashboardPage.verifyChildElementContainsText('[class*=gridRow__grid-row] a',`Some Random name`);
+        dashboardPage.clickFirstDeleteButton();
+        deleteDashboardModal.deleteDashboardModalLoadsProperly();
+        deleteDashboardModal.clickDeleteDashboard();
+        dashboardPage.isDasbhoardDeletedProperly();
     });
 
     it('[UI-T0008] User is able to search a Dashboard by Name', () => {

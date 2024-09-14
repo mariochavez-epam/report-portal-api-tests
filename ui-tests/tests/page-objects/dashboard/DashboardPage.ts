@@ -13,7 +13,8 @@ export default class DashboardPage extends BasePage {
       logoutButton: '#logoutButton',
       searchByNameInput: '[placeholder="Search by name"]',
       addDashboardButton: '[class*="addDashboardButton__add"] button',
-      notificationDashboardAdded: ".notification-transition-enter-done"
+      notificationDashboardAdded: ".notification-transition-enter-done",
+      deleteButton: '[class*="icon__icon-delete"]'
     };
   }
 
@@ -23,9 +24,12 @@ export default class DashboardPage extends BasePage {
   }
 
 
-
   isDasbhoardAddedProperly() {
     cy.get(this.selectors.notificationDashboardAdded).contains('Dashboard has been added').should('be.visible');
+  }
+
+  isDasbhoardDeletedProperly() {
+    cy.get(this.selectors.notificationDashboardAdded).contains('Dashboard has been deleted').should('be.visible');
   }
 
 
@@ -40,6 +44,11 @@ export default class DashboardPage extends BasePage {
 
   clickAddNewDashboardButton() {
     cy.get(this.selectors.addDashboardButton).click();
+  }
+
+
+  clickFirstDeleteButton() {
+    cy.get(this.selectors.deleteButton).first().click();
   }
 
 
