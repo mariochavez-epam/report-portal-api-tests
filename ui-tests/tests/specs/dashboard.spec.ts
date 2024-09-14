@@ -31,6 +31,9 @@ describe('Dashboard Page UI Tests', () => {
         addNewDashboardModal.typeDashboardDescription(`Some Random description for Dashboard with random name ${randomFilterId}`);
         addNewDashboardModal.clickAddNewDashboard();
         dashboardPage.isDasbhoardAddedProperly();
+        dashboardPage.clickDashboardItemOnSideBar();
+        dashboardPage.searchDashboardByName(`Some Random name ${randomFilterId}`);
+        dashboardPage.verifyChildElementContainsText('[class*=gridRow__grid-row] a',`Some Random name ${randomFilterId}`);
     });
 
     it('[UI-T0008] User is able to search a Dashboard by Name', () => {

@@ -53,6 +53,12 @@ export abstract class BasePage {
     cy.get(selector).clear().type(value);
   }
 
+  getSideBarWrapper() {
+    return cy.get('[class*="sidebar__sidebar"]');
+  }
+
+  
+
   // Take a screenshot
   takeScreenshot(fileName) {
     cy.screenshot(fileName);
@@ -74,4 +80,9 @@ export abstract class BasePage {
   verifyChildElementContainsText(parentSelector, textToFind){
     cy.get(parentSelector).contains(textToFind);
   }
+
+     // Method to click on the add report button
+     clickDashboardItemOnSideBar() {
+      this.getSideBarWrapper().contains('span','Dashboards').parent('span').click();
+    }
 }

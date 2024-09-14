@@ -22,6 +22,8 @@ export default class DashboardPage extends BasePage {
     cy.get(this.selectors.mainPageWrapper).should('be.visible');
   }
 
+
+
   isDasbhoardAddedProperly() {
     cy.get(this.selectors.notificationDashboardAdded).contains('Dashboard has been added').should('be.visible');
   }
@@ -35,6 +37,7 @@ export default class DashboardPage extends BasePage {
   clickAddReportButton() {
     cy.get(this.selectors.addReportButton).click();
   }
+
   clickAddNewDashboardButton() {
     cy.get(this.selectors.addDashboardButton).click();
   }
