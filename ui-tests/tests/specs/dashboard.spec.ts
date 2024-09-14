@@ -38,7 +38,7 @@ describe('Dashboard Page UI Tests', () => {
         dashboardPage.verifyChildElementContainsText('[class*=gridRow__grid-row] a',`Some Random name ${randomFilterId}`);
     });
 
-    it.only('[UI-T0002] User is able to delete a dashboard via UI', () => {
+    it('[UI-T0002] User is able to delete a dashboard via UI', () => {
         dashboardPage.searchDashboardByName(`Some Random name`);
         dashboardPage.verifyChildElementContainsText('[class*=gridRow__grid-row] a',`Some Random name`);
         dashboardPage.clickFirstDeleteButton();
