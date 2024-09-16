@@ -14,8 +14,8 @@ const config: Config.InitialOptions = {
     reporters: [
       "default", [
         "jest-html-reporter", {
-          "outputPath": "./reports/test-report.html",
-          "pageTitle": "Automation Test with askui",
+          "outputPath": "<rootDir>/api-tests/reports/test-report.html",
+          "pageTitle": "API Automation Suite",
           "includeFailureMsg": true
         }
       ],
