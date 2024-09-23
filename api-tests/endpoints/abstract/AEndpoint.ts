@@ -6,7 +6,7 @@ const testData = require("../../config/config");
 export abstract class AEndpoint {
   protected constructor(serviceUrl: string) {
     let testEnvironment = process.env.TEST_ENVIRONMENT || "local";
-    const baseUrl: string = testData[testEnvironment].BASE_URL || "https://rp.epam.com";
+    const baseUrl: string = testData[testEnvironment].BASE_URL || "http://localhost:8080";
     this.url = baseUrl + serviceUrl ;
     this.restClient = new RestClient(this.url);
     this.log.info(`The Service URL is ${this.url}`);

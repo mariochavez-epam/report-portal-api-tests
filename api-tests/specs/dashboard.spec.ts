@@ -58,7 +58,7 @@ describe('Dashboard Tests', () => {
     })
 
 
-    test.only('[T-0004] User is able to add a widget to a dashboard within PUT request', async () => {
+    test('[T-0004] User is able to add a widget to a dashboard within PUT request', async () => {
         const randomFilterId = Utils.generateRandomUsername(10);
         const response: AxiosResponse<DashboardResponseBody> = await dashboard.getDashboards(process.env.bearerToken);
         const dataForWidget = testData[process.env.testEnvironment].widgetData;
