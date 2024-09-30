@@ -1,0 +1,18 @@
+{
+    "json": {
+      "enabled": false,
+      "output": "jsonlogs/log.json",
+      "formatter": "cucumber-json-formatter.exe"
+    },
+    "messages": {
+      "enabled": false,
+      "output": "jsonlogs/messages.ndjson"
+    },
+    "html": {
+      "enabled": false
+    },
+    "stepDefinitions": [
+      "ui-tests/tests/step_definitions/*.{js,ts}",
+      "ui-tests\\tests\\step_definitions\\*.{js,ts}"
+    ]
+  }

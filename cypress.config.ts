@@ -1,11 +1,18 @@
-const { defineConfig } = require('cypress');
-import { config } from "dotenv";
+import { defineConfig } from "cypress";
+const cucumber = require("cypress-cucumber-preprocessor").default;
+const browserify = require("@cypress/browserify-preprocessor");
+
+const createBundler = require("@bahmutov/cypress-esbuild-preprocessor");
+const preprocessor = require("@badeball/cypress-cucumber-preprocessor");
+const createEsbuildPlugin = require("@badeball/cypress-cucumber-preprocessor/esbuild");
+import { config } from 'dotenv';
 config();
+
 
 module.exports = defineConfig({
   e2e: {
-    specPattern: './ui-tests/tests/specs/**/*', // Path to your feature files
-    supportFile: './ui-tests/tests/support/e2e.ts', // Path to your hooks file
+    specPattern: './ui-tests/tests/features/**/*.feature', // Path to your feature files
+    supportFile: false, // Path to your hooks file
     defaultCommandTimeout: 10000,
     pageLoadTimeout: 120000,
     retries: {
@@ -14,13 +21,9 @@ module.exports = defineConfig({
     },
     chromeWebSecurity: false,
     env: {
-      BASE_URL: process.env.BASE_URL,
-      API_USER: process.env.API_USER,
-      API_PASSWORD: process.env.API_PASSWORD,
-      UI_USER: process.env.UI_USER,
-      UI_PASSWORD: process.env.UI_PASSWORD,
-      TEST_ENVIRONMENT: process.env.TEST_ENVIRONMENT,
-      // Custom environment variables can be set here
+        baseUrl: 'https://rp.epam.com' || process.env.BASE_URL,
+        UI_USER: 'mchavezTest' || process.env.UI_USER,
+        UI_PASSWORD: 'sa7asa7a' || process.env.UI_PASSWORD,
     },
     viewportWidth: 1280,
     viewportHeight: 720,
@@ -29,14 +32,17 @@ module.exports = defineConfig({
     screenshotOnRunFailure: true,
     // Set to true to take screenshots on failure automatically
     setupNodeEvents(on, config) {
-       // Get environment variable from Cypress config
+      // Event listeners to handle various Cypress events
+      preprocessor.addCucumberPreprocessorPlugin(on, config);
+
+      on(
+        "file:preprocessor",
+        createBundler({
+          plugins: [createEsbuildPlugin.default(config)],
+        })
+      );
+      return config;
 
     },
-  },
-
-  // Setting Chrome browser as the default browser
-  browser: 'chrome',
-  browserOptions: {
-    headless: false, // Set to true if you want to run headless
   },
 });
