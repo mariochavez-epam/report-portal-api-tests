@@ -1,12 +1,11 @@
-const testData = require("../../tests/config/config");
-const testEnvironment = Cypress.env("TEST_ENVIRONMENT") || "local";
+const testEnvironment = "local";
 
 export abstract class BasePage {
   baseUrl: string;
   constructor() {
     console.log("testData[testEnvironment].BASE_URL");
-    console.log(testData[testEnvironment].BASE_URL);
-    this.baseUrl = testData[testEnvironment].BASE_URL;
+    console.log("testData[testEnvironment].BASE_URL");
+    this.baseUrl = "https://rp.epam.com";
   }
 
   // Get the base URL
