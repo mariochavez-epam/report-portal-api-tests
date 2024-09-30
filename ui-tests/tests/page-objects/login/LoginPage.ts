@@ -1,6 +1,6 @@
 import { BasePage } from "../BasePage";
 
-export default class LoginPage extends BasePage {
+class LoginPage extends BasePage {
   selectors: {
     usernameInput: string; passwordInput: string; loginButton: string; userAvatarIcon: string; userMenuContainer: string; logoutButton: string; // Adjusted to use a different CSS selector
     notificationContainer: string; loginSuccessfulMessage: string;
@@ -40,12 +40,16 @@ export default class LoginPage extends BasePage {
 
   // Method to enter username
   enterUsername(username) {
-    cy.get(this.selectors.usernameInput).clear().type(username);
+    cy.get('[class*="loginForm__login-field"]')
+      .find(this.selectors.usernameInput).should('exist')
+      .clear().type(username, {force: true});
   }
 
   // Method to enter password
   enterPassword(password) {
-    cy.get(this.selectors.passwordInput).clear().type(password);
+    cy.get('[class*="loginForm__password-field"]')
+      .find(this.selectors.passwordInput).should('exist')
+      .clear().type(password,  {force: true});
   }
 
   // Method to click the login button
@@ -68,3 +72,6 @@ export default class LoginPage extends BasePage {
     return cy.get(this.selectors.loginSuccessfulMessage).should('be.visible');
   }
 }
+
+const login = new LoginPage();
+export default login;

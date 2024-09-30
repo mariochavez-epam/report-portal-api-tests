@@ -1,6 +1,10 @@
 import { defineConfig } from "cypress";
 const cucumber = require("cypress-cucumber-preprocessor").default;
 const browserify = require("@cypress/browserify-preprocessor");
+
+const createBundler = require("@bahmutov/cypress-esbuild-preprocessor");
+const preprocessor = require("@badeball/cypress-cucumber-preprocessor");
+const createEsbuildPlugin = require("@badeball/cypress-cucumber-preprocessor/esbuild");
 import { config } from 'dotenv';
 config();
 
@@ -17,7 +21,9 @@ module.exports = defineConfig({
     },
     chromeWebSecurity: false,
     env: {
-      // Custom environment variables can be set here
+        baseUrl: 'https://rp.epam.com' || process.env.BASE_URL,
+        UI_USER: 'mchavezTest' || process.env.UI_USER,
+        UI_PASSWORD: 'sa7asa7a' || process.env.UI_PASSWORD,
     },
     viewportWidth: 1280,
     viewportHeight: 720,
@@ -27,8 +33,14 @@ module.exports = defineConfig({
     // Set to true to take screenshots on failure automatically
     setupNodeEvents(on, config) {
       // Event listeners to handle various Cypress events
-      const options = browserify.defaultOptions;
-      on("file:preprocessor", cucumber());
+      preprocessor.addCucumberPreprocessorPlugin(on, config);
+
+      on(
+        "file:preprocessor",
+        createBundler({
+          plugins: [createEsbuildPlugin.default(config)],
+        })
+      );
       return config;
 
     },

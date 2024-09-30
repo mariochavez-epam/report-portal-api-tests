@@ -1,6 +1,7 @@
+
 import { BasePage } from "../BasePage";
 
-export default class DashboardPage extends BasePage {
+class DashboardPage extends BasePage {
   selectors;
   constructor() {
     super();
@@ -57,3 +58,6 @@ export default class DashboardPage extends BasePage {
     .type('{enter}');;
   }
 }
+
+const dashboard = new DashboardPage();
+export default dashboard;
