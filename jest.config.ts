@@ -19,7 +19,14 @@ const config: Config.InitialOptions = {
           "includeFailureMsg": true
         }
       ],
-    ]
+    ],
+    // This will look for .feature files and their corresponding step definition files.
+    testMatch: [
+      "**/features/**/*.steps.ts"
+    ],
+    transform: {
+      '^.+\\.ts?$': 'ts-jest', // Transform TypeScript files
+    }
 };
 
 export default config;
