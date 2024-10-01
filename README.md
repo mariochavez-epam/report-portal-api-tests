@@ -17,7 +17,6 @@ Dillinger requires [Node.js](https://nodejs.org/) v20+ to run.
 Install the dependencies and devDependencies.
 
 ```sh
-cd dillinger
 npm install
 ```
 
