@@ -29,6 +29,11 @@ const dashboardSchema = Joi.object().keys({
   widgets: Joi.array().required()
 });
 
+const notExistingDashboardSchema = Joi.object().keys({
+  errorCode: Joi.number().required(),
+  message: Joi.string().required()
+});
+
 const postNewDashboardSchema = Joi.object().keys({
   id: Joi.number().required(),
 });
@@ -44,15 +49,12 @@ defineFeature(feature, (test) => {
     widget = new WidgetsEndpoints();
   });
 
-
-
   const thenResponseStatusCodeShouldBe = (then, responseStatusCode) => {
     then(/I should receive a status code of \$(\d+)/, expectedStatusCode => {
         expect(responseStatusCode).toEqual(expectedStatusCode);
     });
   };
   
-
   test('User is able to create a dashboard within POST request', ({ given, when, then }) => {
     let randomId: string;
 
@@ -78,6 +80,61 @@ defineFeature(feature, (test) => {
     });
   });
 
+  test('User is not able to create a dashboard within POST request without name field', ({ given, when, then }) => {
+    let randomId: string;
+
+    given('I have random data to create a dashboard', () => {
+      randomId = Utils.generateRandomUsername(10);
+    });
+
+    when('I create the dashboard without name field', async () => {
+      const data = { names: `New Dashboard ID: ${randomId}`, description: `New Dashboard with Random ID: ${randomId} Description` };
+      response = await dashboard.createDashboard(data, process.env.bearerToken);
+    });
+
+    then('I should receive a status code of 400', () => {
+      expect(response.status).toEqual(400);
+    });
+
+    then('the dashboard error data should contain valid data', () => {
+      Joi.assert(response.data.content, notExistingDashboardSchema);
+    });
+
+    then('the error message should be as expected', () => {
+      expect(response.data.errorCode).toEqual(4001);
+      expect(response.data.message).toEqual("Incorrect Request. [Field 'name' should not be null.] ");
+    });
+  });
+
+  test('User is not able to create a dashboard within POST request that already exist', ({ given, when, then }) => {
+    let dashboardName: string;
+    let dashboardId: number;
+    
+    given('I have an existing dashboard', async () => {
+        const dashboardResponse: AxiosResponse<DashboardResponseBody> = await dashboard.getDashboards(process.env.bearerToken);
+        dashboardId = dashboardResponse.data.content[0].id;
+        dashboardName = dashboardResponse.data.content[0].name;
+      });
+
+    when('I create the dashboard without name field', async () => {
+      const data = { name: dashboardName, description: `New Dashboard duplicated` };
+      response = await dashboard.createDashboard(data, process.env.bearerToken);
+    });
+
+    then('I should receive a status code of 409', () => {
+      expect(response.status).toEqual(409);
+    });
+
+    then('the dashboard error data should contain valid data', () => {
+      Joi.assert(response.data.content, notExistingDashboardSchema);
+    });
+
+    then('the error message should be as expected', () => {
+      expect(response.data.errorCode).toEqual(4091);
+      expect(response.data.message).toEqual(`Resource '${dashboardName}' already exists. You couldn't create the duplicate.`);
+    });
+  });
+
   test('User is able to get a created dashboard within GET request', ({ given, when, then }) => {
     let dashboardId: number;
     given('I have an existing dashboard', async () => {
@@ -95,6 +152,27 @@ defineFeature(feature, (test) => {
 
     then('the dashboard should contain valid data', () => {
       Joi.assert(response.data.content, dashboardSchema);
+    });
+  });
+
+  test('User get proper error message when getting a dashboard that do not exist', ({ given, when, then }) => {
+    let dashboardId: number = 121231231231321;
+
+    given('I request a not existing dashboard', async () => {
+      response = await dashboard.getDashboardById(dashboardId.toString(), process.env.bearerToken);
+    });
+
+    then('I should receive a status code of 404', () => {
+      expect(response.status).toEqual(404);
+    });
+
+    then('the dashboard error data should contain valid data', () => {
+      Joi.assert(response.data.content, notExistingDashboardSchema);
+    });
+
+    then('the error message should be as expected', () => {
+      expect(response.data.errorCode).toEqual(40422);
+      expect(response.data.message).toEqual(`Dashboard with ID '${dashboardId}' not found on project 'mchaveztest_personal'. Did you use correct Dashboard ID?`);
     });
   });
 
@@ -155,6 +233,32 @@ defineFeature(feature, (test) => {
     then('I should receive a confirmation message', () => {
         expect(response.data.message).toEqual(`Dashboard with ID = '${createdDashboardId}' successfully deleted.`);
       });
+  });
+
+
+  test('User is not able to remove a dashboard that do not exist within DELETE request', ({ given, when, then }) => {
+    let dashboardId: number = 121231231231321;
+
+    given('I request a not existing dashboard', async () => {
+      response = await dashboard.getDashboardById(dashboardId.toString(), process.env.bearerToken);
+    });
+
+    when('I delete the dashboard that do not exist', async () => {
+      response = await dashboard.deleteDashboard(dashboardId.toString(), process.env.bearerToken);
+    });
+
+    then('I should receive a status code of 404', () => {
+      expect(response.status).toEqual(404);
+    });
+
+    then('the dashboard error data should contain valid data', () => {
+      Joi.assert(response.data.content, notExistingDashboardSchema);
+    });
+
+    then('the error message should be as expected', () => {
+      expect(response.data.errorCode).toEqual(40422);
+      expect(response.data.message).toEqual(`Dashboard with ID '${dashboardId}' not found on project 'mchaveztest_personal'. Did you use correct Dashboard ID?`);
+    });
   });
 
 });

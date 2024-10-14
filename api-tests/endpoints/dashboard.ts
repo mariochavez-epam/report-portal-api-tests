@@ -7,7 +7,6 @@ export default class DashboardEndpoints extends AEndpoint {
   constructor() {
     let testEnvironment = process.env.TEST_ENVIRONMENT || "local";
     super(`/api/v1/${testData[testEnvironment].PROJECT_NAME}/dashboard`);
-    //?page.page=1&page.size=300&page.page=1&page.size=300&page.sort=
   }
 
 
