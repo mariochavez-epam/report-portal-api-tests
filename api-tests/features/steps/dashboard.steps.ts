@@ -55,7 +55,7 @@ defineFeature(feature, (test) => {
     });
   };
   
-  test('User is able to create a dashboard within POST request', ({ given, when, then }) => {
+  test('[Positive] User is able to create a dashboard within POST request', ({ given, when, then }) => {
     let randomId: string;
 
     given('I have random data to create a dashboard', () => {
@@ -80,7 +80,7 @@ defineFeature(feature, (test) => {
     });
   });
 
-  test('User is not able to create a dashboard within POST request without name field', ({ given, when, then }) => {
+  test('[Negative] User is not able to create a dashboard within POST request without name field', ({ given, when, then }) => {
     let randomId: string;
 
     given('I have random data to create a dashboard', () => {
@@ -106,7 +106,7 @@ defineFeature(feature, (test) => {
     });
   });
 
-  test('User is not able to create a dashboard within POST request that already exist', ({ given, when, then }) => {
+  test('[Negative] User is not able to create a dashboard within POST request that already exist', ({ given, when, then }) => {
     let dashboardName: string;
     let dashboardId: number;
     
@@ -135,7 +135,7 @@ defineFeature(feature, (test) => {
     });
   });
 
-  test('User is able to get a created dashboard within GET request', ({ given, when, then }) => {
+  test('[Positive] User is able to get a created dashboard within GET request', ({ given, when, then }) => {
     let dashboardId: number;
     given('I have an existing dashboard', async () => {
         const dashboardResponse: AxiosResponse<DashboardResponseBody> = await dashboard.getDashboards(process.env.bearerToken);
@@ -155,7 +155,7 @@ defineFeature(feature, (test) => {
     });
   });
 
-  test('User get proper error message when getting a dashboard that do not exist', ({ given, when, then }) => {
+  test('[Negative] User get proper error message when getting a dashboard that do not exist', ({ given, when, then }) => {
     let dashboardId: number = 121231231231321;
 
     given('I request a not existing dashboard', async () => {
@@ -176,7 +176,7 @@ defineFeature(feature, (test) => {
     });
   });
 
-  test('User is able to add a widget to a dashboard within PUT request', ({ given, when, then }) => {
+  test('[Positive] User is able to add a widget to a dashboard within PUT request', ({ given, when, then }) => {
     let dashboardId: number;
     let dataForWidget: any;
 
@@ -209,7 +209,84 @@ defineFeature(feature, (test) => {
     });
   });
 
-  test('User is able to remove a dashboard within DELETE request', ({ given, when, then }) => {
+  test('[Negative] User is not able to add a not existing widget to a existing dashboard within PUT request', ({ given, when, then }) => {
+    let dashboardId: number;
+    let dataForWidget: any;
+    let notExistingWidgetID: number = 88888;
+
+    given('I request an existing dashboard', async () => {
+      const dashboardResponse: AxiosResponse<DashboardResponseBody> = await dashboard.getDashboards(process.env.bearerToken);
+      dashboardId = dashboardResponse.data.content[0].id;
+      dataForWidget = testData[process.env.testEnvironment].widgetData;    });
+
+    when('I add a not existing widget to an existing dashboard', async () => {
+      const widgetResponse: AxiosResponse = await widget.createWidget(dataForWidget, process.env.bearerToken);
+      const widgetData = {
+        addWidget: {
+          widgetId: notExistingWidgetID,
+          widgetName: `DEMO_FILTER_${Utils.generateRandomUsername(10)}`,
+          widgetType: 'overallStatistics',
+          widgetPosition: { positionX: 0, positionY: 0 },
+          widgetSize: { width: 6, height: 7 }
+        }
+      };
+      response = await dashboard.addWidgetToDashboard(dashboardId.toString(), widgetData, process.env.bearerToken);
+      console.log(response.data);
+    });
+
+    then('I should receive a status code of 404', () => {
+      expect(response.status).toEqual(404);
+    });
+
+    then('the dashboard error data should contain valid data', () => {
+      Joi.assert(response.data.content, notExistingDashboardSchema);
+    });
+
+    then('the error message should be as expected', () => {
+      expect(response.data.errorCode).toEqual(40420);
+      expect(response.data.message).toEqual(`Widget with ID '${notExistingWidgetID}' not found on project 'mchaveztest_personal'. Did you use correct Widget ID?`);
+    });
+  });
+
+  test('[Negative] User is not able to add a widget to a not existing dashboard within PUT request', ({ given, when, then }) => {
+    let notExistingDashboardId: number;
+    let dataForWidget: any;
+
+    given('I request a not existing dashboard', async () => {
+      notExistingDashboardId = 123123;
+      dataForWidget = testData[process.env.testEnvironment].widgetData;    
+    });
+
+    when('I add a widget to a not existing dashboard', async () => {
+      const widgetResponse: AxiosResponse = await widget.createWidget(dataForWidget, process.env.bearerToken);
+      const widgetData = {
+        addWidget: {
+          widgetId: widgetResponse.data.id,
+          widgetName: `DEMO_FILTER_${Utils.generateRandomUsername(10)}`,
+          widgetType: 'overallStatistics',
+          widgetPosition: { positionX: 0, positionY: 0 },
+          widgetSize: { width: 6, height: 7 }
+        }
+      };
+      response = await dashboard.addWidgetToDashboard(notExistingDashboardId.toString(), widgetData, process.env.bearerToken);
+      console.log(response.data);
+    });
+
+    then('I should receive a status code of 404', () => {
+      expect(response.status).toEqual(404);
+    });
+
+    then('the dashboard error data should contain valid data', () => {
+      Joi.assert(response.data.content, notExistingDashboardSchema);
+    });
+
+    then('the error message should be as expected', () => {
+      expect(response.data.errorCode).toEqual(40422);
+      expect(response.data.message).toEqual(`Dashboard with ID '${notExistingDashboardId}' not found on project 'mchaveztest_personal'. Did you use correct Dashboard ID?`);
+    });
+  });
+
+  test('[Positive] User is able to remove a dashboard within DELETE request', ({ given, when, then }) => {
     let createdDashboardId: number;
 
     given('I have a dashboard to delete', async () => {
@@ -236,7 +313,7 @@ defineFeature(feature, (test) => {
   });
 
 
-  test('User is not able to remove a dashboard that do not exist within DELETE request', ({ given, when, then }) => {
+  test('[Negative] User is not able to remove a dashboard that do not exist within DELETE request', ({ given, when, then }) => {
     let dashboardId: number = 121231231231321;
 
     given('I request a not existing dashboard', async () => {
