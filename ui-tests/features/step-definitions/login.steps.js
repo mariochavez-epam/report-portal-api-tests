@@ -13,10 +13,8 @@ Given(/^I am on the (\w+) page$/, async (page) => {
     await pages[page].open()
 });
 
-When('I enter a valid username and password', async (page) => {
-    await pages.login.enterUsername("default");
-    console.log("process.env.UI_PASSWORD") ;
-    console.log(process.env.UI_PASSWORD);
+When('I enter a valid username and password', async () => {
+    await pages.login.enterUsername(process.env.UI_USER);
     await pages.login.enterPassword(process.env.UI_PASSWORD);
 });
 
