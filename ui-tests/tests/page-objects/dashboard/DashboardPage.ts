@@ -1,5 +1,5 @@
 
-import { BasePage } from "../BasePage";
+import { BasePage } from "../BasePage.ts";
 
 class DashboardPage extends BasePage {
   selectors;

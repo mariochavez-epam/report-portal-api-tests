@@ -1,87 +1,65 @@
-const testEnvironment = "local";
+import {$} from'@wdio/globals';
+import {browser} from '@wdio/globals';
 
 export abstract class BasePage {
-  baseUrl: string;
-  constructor() {
-    console.log("testData[testEnvironment].BASE_URL");
-    console.log("testData[testEnvironment].BASE_URL");
-    this.baseUrl = "https://rp.epam.com";
-  }
+    baseUrl = "https://rp.epam.com";
 
-  // Get the base URL
-  getBaseUrl() {
-    return this.baseUrl;
-  }
+    getBaseUrl() {
+        return this.baseUrl;
+    }
 
-  // Navigate to a specific URL
-  navigateTo(url) {
-    console.log("navigating to");
-    console.log(this.baseUrl + url);
-    cy.visit(this.baseUrl + url);
-  }
+    navigateTo(url) {
+        browser.url(this.baseUrl + url);
+    }
 
-  // Wait for an element to be visible
-  waitForElementVisible(selector, timeout = 5000) {
-    cy.get(selector, { timeout }).should('be.visible');
-  }
+    waitForElementVisible(selector, timeout = 5000) {
+        $(selector).waitForDisplayed(timeout);
+    }
 
-  // Wait for an element to be clickable (Cypress automatically handles visibility, but you can add additional checks if needed)
-  waitForElementClickable(selector, timeout = 5000) {
-    cy.get(selector, { timeout }).should('be.visible').and('not.be.disabled');
-  }
+    waitForElementClickable(selector, timeout = 5000) {
+        $(selector).waitForEnabled(timeout);
+    }
 
-  // Wait for a page to be loaded completely (Cypress automatically waits for the DOM to load, so this is usually unnecessary)
-  waitForPageToLoad(timeout = 10000) {
-    cy.document().should((doc) => {
-      expect(doc.readyState).to.equal('complete');
-    });
-  }
+    waitForPageToLoad(timeout = 10000) {
+        browser.waitUntil(
+            () => browser.execute(() => document.readyState === 'complete'),
+            { timeout }
+        );
+    }
 
-  // Get the text of an element
-  getElementText(selector) {
-    return cy.get(selector).invoke('text');
-  }
+    getElementText(selector) {
+        return $(selector).getText();
+    }
 
-  // Click an element
-  clickElement(selector) {
-    cy.get(selector).click();
-  }
+    clickElement(selector) {
+        $(selector).click();
+    }
 
-  // Set value in an input field
-  setInputValue(selector, value) {
-    cy.get(selector).clear().type(value);
-  }
+    setInputValue(selector, value) {
+        const inputField = $(selector);
+        inputField.clearValue();
+        inputField.setValue(value);
+    }
 
-  getSideBarWrapper() {
-    return cy.get('[class*="sidebar__sidebar"]');
-  }
+    takeScreenshot(fileName) {
+        browser.saveScreenshot(fileName);
+    }
+
+    acceptAlert() {
+        browser.acceptAlert();
+    }
+
+    dismissAlert() {
+        browser.dismissAlert();
+    }
+
+    getAlertText() {
+        return browser.getAlertText();
+    }
+
+    verifyChildElementContainsText(parentSelector, textToFind){
+        $(parentSelector).$('*=textToFind');
+    }
 
   
-
-  // Take a screenshot
-  takeScreenshot(fileName) {
-    cy.screenshot(fileName);
-  }
-
-  // Handle alerts
-  acceptAlert() {
-    cy.on('window:alert', () => true);
-  }
-
-  dismissAlert() {
-    cy.on('window:confirm', () => false);
-  }
-
-  getAlertText() {
-    return cy.on('window:alert', (text) => text);
-  }
-
-  verifyChildElementContainsText(parentSelector, textToFind){
-    cy.get(parentSelector).contains(textToFind);
-  }
-
-     // Method to click on the add report button
-     clickDashboardItemOnSideBar() {
-      this.getSideBarWrapper().contains('span','Dashboards').parent('span').click();
-    }
 }
