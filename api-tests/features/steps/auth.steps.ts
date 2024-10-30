@@ -2,7 +2,7 @@ import { AuthResponseBody } from '../../models'
 import { AxiosResponse } from 'axios'
 import AuthEndpoints from '../../endpoints/auth';
 import { expect } from '@jest/globals';
-import { Utils } from '../../../utils/Utils';
+import { Utils } from '../../../utils/Utils.ts';
 import { defineFeature, loadFeature } from 'jest-cucumber';
 import Joi from 'joi';
 

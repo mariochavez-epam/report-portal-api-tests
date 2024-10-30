@@ -1,4 +1,4 @@
-import { Utils } from "../../utils/Utils";
+import { Utils } from "../../utils/Utils.ts";
 
 const randomFilterId = Utils.generateRandomUsername(10);
 module.exports = {

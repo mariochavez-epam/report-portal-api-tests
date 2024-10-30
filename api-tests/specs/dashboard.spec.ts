@@ -1,7 +1,7 @@
 import { DashboardResponseBody, WidgetsResponseBody } from '../models'
 import { AxiosResponse } from 'axios'
 import { expect } from '@jest/globals';
-import { Utils } from '../../utils/Utils';
+import { Utils } from '../../utils/Utils.ts';
 import DashboardEndpoints from '../endpoints/dashboard';
 
 import Joi from "joi";

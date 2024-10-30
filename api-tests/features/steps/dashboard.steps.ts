@@ -1,6 +1,6 @@
 import { DashboardResponseBody, WidgetsResponseBody } from '../../models';
 import { AxiosResponse } from 'axios';
-import { Utils } from '../../../utils/Utils';
+import { Utils } from '../../../utils/Utils.ts';
 import DashboardEndpoints from '../../endpoints/dashboard';
 import WidgetsEndpoints from '../../endpoints/widgets';
 import { defineFeature, loadFeature } from 'jest-cucumber';
