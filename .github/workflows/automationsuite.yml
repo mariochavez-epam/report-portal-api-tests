@@ -32,6 +32,7 @@ jobs:
           API_PASSWORD: ${{ secrets.API_PASSWORD }}
           UI_USER: ${{ secrets.UI_USER }}
           UI_PASSWORD: ${{ secrets.UI_PASSWORD }}
+          RP_API_KEY: ${{ secrets.RP_API_KEY }}
   
       - name: Clean Install
         run: npm ci
