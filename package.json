@@ -17,6 +17,7 @@
     "@cucumber/cucumber": "latest",
     "@cypress/code-coverage": "^3.13.2",
     "@cypress/webpack-preprocessor": "^6.0.2",
+    "@reportportal/agent-js-jest": "^5.1.1",
     "@types/cypress-cucumber-preprocessor": "^4.0.5",
     "@types/jest": "^29.5.11",
     "@types/joi": "^17.2.3",
@@ -40,5 +41,5 @@
   },
   "cypress-cucumber-preprocessor": {
     "step_definitions": "ui-tests/tests/features/step_definitions/**.ts"
- }
+  }
 }
