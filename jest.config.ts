@@ -1,5 +1,4 @@
 import type { Config } from '@jest/types';
-
 const config: Config.InitialOptions = {
   "preset": "ts-jest",
   "testPathIgnorePatterns": [
@@ -17,7 +16,7 @@ const config: Config.InitialOptions = {
       '@reportportal/agent-js-jest',
       {
         endpoint: "https://rp.epam.com/api/v1",
-        apiKey: process.env.RP_API_KEY,
+        apiKey: process.env.RP_API_KEY || 'jest_JQs-uxKBQfy1hyOvDiZn4HKWu0O5Z4sO--QRPsYhWy5KI1ke1YkGZpRQEVCxFJZ0',
         project: "mario_chavez_personal",
         launch: "API Testing Suite - Report Portal",
         description: "New Launch for api testing framework using Jest",

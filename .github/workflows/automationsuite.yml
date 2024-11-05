@@ -13,13 +13,7 @@ jobs:
   build:    
     name: Build and Test automation Framework
     runs-on: ubuntu-latest
-    env: # Or as an environment variable
-      TEST_ENVIRONMENT: "prod"
-      API_USER: ${{ secrets.API_USER }}
-      API_PASSWORD: ${{ secrets.API_PASSWORD }}
-      UI_USER: ${{ secrets.UI_USER }}
-      UI_PASSWORD: ${{ secrets.UI_PASSWORD }}
-      RP_API_KEY: ${{ secrets.RP_API_KEY }}
+
     strategy:
       matrix:
         node-version: [20.10.0]
@@ -32,7 +26,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-
+        env: # Or as an environment variable
+          TEST_ENVIRONMENT: "prod"
+          API_USER: ${{ secrets.API_USER }}
+          API_PASSWORD: ${{ secrets.API_PASSWORD }}
+          UI_USER: ${{ secrets.UI_USER }}
+          UI_PASSWORD: ${{ secrets.UI_PASSWORD }}
+          RP_API_KEY: ${{ secrets.RP_API_KEY }}
   
       - name: Clean Install
         run: npm ci
