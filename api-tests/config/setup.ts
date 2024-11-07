@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios";
 import AuthEndpoints from "../endpoints/auth";
 import { AuthResponseBody } from "../models";
 import { SlackIntegration } from "../../utils/SlackIntegration";
-const slack = new SlackIntegration("https://hooks.slack.com/services/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");
+const slack = new SlackIntegration(process.env.SLACK_HOOK);
 
 beforeAll(async () => {
     await slack.sendMessage(`Test Suite Starting: ${new Date().toLocaleString()}`);
