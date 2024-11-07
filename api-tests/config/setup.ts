@@ -1,7 +1,12 @@
 import { AxiosResponse } from "axios";
 import AuthEndpoints from "../endpoints/auth";
 import { AuthResponseBody } from "../models";
+import { SlackIntegration } from "../../utils/SlackIntegration";
+const slack = new SlackIntegration('https://hooks.slack.com/services/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');
+
 beforeAll(async () => {
+    await slack.sendMessage(`Test Suite starting\nStarting on: ${new Date().toLocaleString()}`);
+
     console.log('before all');
     const auth = new AuthEndpoints();
     const response: AxiosResponse<AuthResponseBody> = await auth.login({
