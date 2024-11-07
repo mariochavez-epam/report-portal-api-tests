@@ -17,3 +17,7 @@ beforeAll(async () => {
     process.env.bearerToken = response.data.access_token;
     process.env.testEnvironment = process.env.TEST_ENVIRONMENT || "local";
 })
+
+beforeEach(async () => {
+    await slack.sendMessage(`Test Running: ${expect.getState().currentTestName}`);
+})
