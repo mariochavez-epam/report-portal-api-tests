@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios";
 import AuthEndpoints from "../endpoints/auth";
 import { AuthResponseBody } from "../models";
 import { SlackIntegration } from "../../utils/SlackIntegration";
-const slack = new SlackIntegration('https://hooks.slack.com/services/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');
+const slack = new SlackIntegration('https://hooks.slack.com/services/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');
 
 beforeAll(async () => {
     await slack.sendMessage(`Test Suite starting - Starting on: ${new Date().toLocaleString()}`);
