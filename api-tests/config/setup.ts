@@ -5,7 +5,7 @@ import { SlackIntegration } from "../../utils/SlackIntegration";
 const slack = new SlackIntegration(process.env.SLACK_HOOK);
 
 beforeAll(async () => {
-    await slack.sendMessage(`Test Suite Starting: ${new Date().toLocaleString()}`);
+    //await slack.sendMessage(`Test Suite Starting: ${new Date().toLocaleString()}`);
 
     console.log('before all');
     const auth = new AuthEndpoints();
@@ -19,5 +19,5 @@ beforeAll(async () => {
 })
 
 beforeEach(async () => {
-    await slack.sendMessage(`Test Running: ${expect.getState().currentTestName}`);
+    //await slack.sendMessage(`Test Running: ${expect.getState().currentTestName}`);
 })
